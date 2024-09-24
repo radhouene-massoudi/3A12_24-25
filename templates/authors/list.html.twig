@@ -1,0 +1,13 @@
+{% if authors  is defined and authors  is not empty %}
+{% for  author in  authors%}
+{{author.id}}
+{{author.email}}
+{{author.username |upper}}
+{#<img src="{{asset(author.picture)}}">#}
+<a href="{{path('detailsauthors',{'id':author.id})}}">detail</a>
+{%endfor%}
+{%else%}
+<h1>le tableau est vide</h1>
+{%endif%}
+<br> le nombre des auteurs {{authors|length}}
+<hr>
