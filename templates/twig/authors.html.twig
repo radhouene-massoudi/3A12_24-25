@@ -1,0 +1,36 @@
+{#
+{{dump(a)}}
+{% set sumBooks=0 %}
+{% for au in a %}
+ {{au.id}}
+{{au.username}}
+{{au.nb_books}}
+{% set sumBooks = sumBooks + au.nb_books %}
+
+{% endfor %}
+nb_totle:{{sumBooks}}
+nb_authors={{a |length}}
+
+{% if a is not empty%}
+table is empty
+{% endif %}#}
+
+<table border="2">
+    <tr>
+        <td>id</td>
+        <td>email</td>
+        <td>username</td>
+        <td>image</td>
+        <td>Action</td>
+    </tr>
+    {%for au in a%}
+    <tr>
+       
+        <td>{{au.id}}</td>
+        <td>{{au.email}}</td>
+        <td>{{au.username}}</td>
+        <td>{{au.id}}</td>
+        <td><a href="{{path('d',{'idt':au.id})}}">detail</a></td>
+    </tr>
+    {%endfor%}
+</table>
