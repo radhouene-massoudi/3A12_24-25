@@ -1,0 +1,19 @@
+<table border="2">
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>age</td>
+        <td> createdAt</td>
+        <td>action</td>
+    </tr>
+
+{% for a in s %}
+<tr>
+<td>{{a.id}}</td>
+    <td>{{a.name}}</td>
+        <td>{{a.age}}</td>
+            <td>{{a.createdAt |date('y/m/d')}}</td>
+            <td>----------- </td>
+<tr>
+{% endfor %}
+</table>
