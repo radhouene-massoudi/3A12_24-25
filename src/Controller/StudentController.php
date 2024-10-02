@@ -42,8 +42,13 @@ return $this->render('student/list.html.twig',[
     public function removeStudnet($id,ManagerRegistry $mr,StudentRepository $repo){
 $em=$mr->getManager();
 $student=$repo->find($id);
-$em->remove($student);
-$em->flush();
+if($student!=null){
+    $em->remove($student);
+    $em->flush();
+}else {
+    return  new Response("id n'esxiste pas ");
+}
+
 return $this->redirectToRoute('list_student');
     }
 }

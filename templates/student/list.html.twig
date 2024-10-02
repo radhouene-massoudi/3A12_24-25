@@ -13,7 +13,7 @@
     <td>{{a.name}}</td>
         <td>{{a.age}}</td>
             <td>{{a.createdAt |date('y/m/d')}}</td>
-            <td>----------- </td>
+            <td><a href="{{path('remove_student',{'id':a.id})}}"> remove</a></td>
 <tr>
 {% endfor %}
 </table>
