@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Student;
+use App\Form\StudentFormType;
 use App\Repository\StudentRepository;
 use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -50,5 +52,29 @@ if($student!=null){
 }
 
 return $this->redirectToRoute('list_student');
+    }
+
+    #[Route('/addform', name: 'addform')]
+    public function addStudnetForm(ManagerRegistry $mr,Request $req){
+        $st=new Student();
+        //$st->setName('esprit 3A12');
+        $form=$this->createForm(StudentFormType::class,$st);
+        $form->handleRequest($req);
+        if($form->isSubmitted()){
+            //dd($st);
+          // dd($req->request->getData());//
+            $em=$mr->getManager();
+            $em->persist($st);
+            $em->flush();
+            return $this->redirectToRoute('list_student');
+        }
+        return $this->render("student/addform.html.twig",[
+            'f'=>$form->createView()
+        ]);
+
+    }
+
+    #[Route('/update/{id}', name: 'update')]
+    public function updateStudnetForm(ManagerRegistry $mr,Request $req){
     }
 }
