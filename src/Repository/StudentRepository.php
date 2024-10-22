@@ -40,4 +40,32 @@ class StudentRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findAllByme()
+       {
+        return $this
+        ->getEntityManager()
+        ->createQuery('select s from App\Entity\Student s')
+        ->getResult();
+
+
+       }
+    public function findallQB(){
+       $qb= $this->createQueryBuilder('s');
+       $qb->select('s.name')
+       ->orderBy('s.name','DESC')
+       ->join('s.classroom','c')
+       ->addSelect('c.name n');
+        return $qb->getQuery()->getResult();
+    }
+    public function searchByName($name){
+        return 
+        $this
+        ->createQueryBuilder('s')
+        ->where('s.name=?1')
+        ->setParameter('1',$name)
+        ->getQuery()
+        ->getResult();
+
+    }
 }

@@ -6,6 +6,7 @@ use App\Entity\Student;
 use App\Form\StudentFormType;
 use App\Repository\StudentRepository;
 use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,5 +77,33 @@ return $this->redirectToRoute('list_student');
 
     #[Route('/update/{id}', name: 'update')]
     public function updateStudnetForm(ManagerRegistry $mr,Request $req){
+    }
+
+    #[Route('/findall', name: 'findall')]
+    public function findall(EntityManagerInterface $em){
+$dql=$em->createQuery("select s from App\Entity\Student s where s.name=:name ");
+$dql->setParameter('name','ali');
+$result=$dql->getResult();
+dd($result);
+    }
+    
+    #[Route('/findallinrepo', name: 'findallinrepo')]
+    public function findallinrepo(StudentRepository $repo){
+        $result=$repo->findallQB();
+        dd($result);
+    }
+
+    #[Route('/search', name: 'search')]
+    public function search(StudentRepository $repo,Request $req){
+if($req->isMethod('POST')){
+        $name=$req->get('3A');
+
+$result=$repo->searchByName($name);
+return $this->render('student/list.html.twig',[
+    's'=>$result
+    ]);
+}else {
+    return new Response('error get method');
+}
     }
 }

@@ -1,9 +1,15 @@
+<form method="POST" action="/search">
+    <label>search</label>
+    <input type="text" name='3A'>
+    <input type="submit" value='submit'>
+</form>
 <table border="2">
     <tr>
         <td>id</td>
         <td>name</td>
         <td>age</td>
         <td> createdAt</td>
+        <td> classroom</td>
         <td>action</td>
     </tr>
 
@@ -13,6 +19,10 @@
     <td>{{a.name}}</td>
         <td>{{a.age}}</td>
             <td>{{a.createdAt |date('y/m/d')}}</td>
+            {%if a.classroom!=null %}
+            <td>{{a.classroom.name}}</td>
+            {%else%}<td></td>
+            {%endif%}
             <td><a href="{{path('remove_student',{'id':a.id})}}"> remove</a></td>
 <tr>
 {% endfor %}
